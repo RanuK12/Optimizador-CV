@@ -96,3 +96,7 @@ Al incorporar estas reglas lógicas dentro del pipeline de ingeniería de prompt
 
 ---
 *Desarrollado y mantenido por [Emilio Ranucoli](https://github.com/RanuK12).*
+
+## Licencia
+
+MIT — © 2026 Ranuk IT Solutions | ranuk.dev
