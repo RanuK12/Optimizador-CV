@@ -1,0 +1,66 @@
+{
+  "name": "Emilio Ranucoli",
+  "title": "ML Engineer | Data Scientist",
+  "email": "emilio@ranuk.dev",
+  "phone": "+39 344 5721753",
+  "linkedin": "https://linkedin.com/in/emilio-ranucoli",
+  "github": "https://github.com/RanuK12",
+  "website": "https://ranuk.dev",
+  "experience": [
+    {
+      "role": "Data Scientist",
+      "company": "Ranuk IT Solutions",
+      "location": "Remote",
+      "start_date": "2023-01",
+      "end_date": "2026-06",
+      "description": "Desarrollo de modelos de ML en Python, automatización de pipelines de datos, despliegue en cloud (AWS/GCP)."
+    },
+    {
+      "role": "Systems Engineer",
+      "company": "Freelance",
+      "location": "Argentina/Italia",
+      "start_date": "2020-06",
+      "end_date": "2023-01",
+      "description": "Automatización de procesos, optimización de ETL, desarrollo de APIs REST con FastAPI."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Systems Engineer",
+      "institution": "Universidad Tecnológica Nacional (UTN)",
+      "start_date": "2018-02",
+      "end_date": "2024-02"
+    },
+    {
+      "degree": "Business Administration (in progress)",
+      "institution": "Universidad Nacional de Córdoba (UNC)",
+      "start_date": "2015-02",
+      "end_date": "2026-12"
+    }
+  ],
+  "skills": {
+    "languages": ["Python", "SQL", "JavaScript", "Go"],
+    "ml": ["PyTorch", "TensorFlow", "Scikit-learn"],
+    "cloud": ["AWS", "GCP", "Azure"],
+    "tools": ["Docker", "FastAPI", "PostgreSQL"]
+  },
+  "projects": [
+    {
+      "name": "MoneyPrinterTurbo",
+      "description": "Generador de videos con IA para YouTube Kids y Shorts."
+    },
+    {
+      "name": "Firecrawl Ecom Scraper",
+      "description": "Scraper de precios de e-commerce usando Firecrawl y Qdrant."
+    }
+  ],
+  "languages": [
+    {"language": "Español", "proficiency": "Nativo"},
+    {"language": "Inglés", "proficiency": "Fluido"},
+    {"language": "Italiano", "proficiency": "Fluido"}
+  ],
+  "certifications": [
+    "AWS Certified Developer",
+    "Google Cloud Professional Data Engineer"
+  ]
+}
