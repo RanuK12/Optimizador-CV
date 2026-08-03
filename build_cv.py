@@ -1,4 +1,4 @@
-"""Generate ATS-optimized CV (DOCX + PDF) for Emilio Ranucoli — ML Engineer."""
+"""Generate ATS-optimized CV (DOCX + PDF) using configuration data."""
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -6,6 +6,9 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 import os
+import sys
+import json
+from typing import Dict, Any
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCX_PATH = os.path.join(OUT_DIR, "EmilioRanucoli_MLEngineer.docx")
@@ -46,6 +49,53 @@ def add_hyperlink(paragraph, url, text, size=10):
     paragraph._p.append(hyperlink)
 
 def heading(text):
+    p = doc.add_paragraph()
+    p.paragraph_format.space_before = Pt(7)
+    p.paragraph_format.space_after = Pt(2)
+    p.paragraph_format.line_spacing = 1.0
+    run = p.add_run(text)
+    run.font.name = 'Calibri'
+    run.font.size = Pt(14)
+    run.font.color.rgb = NAVY
+    run.font.bold = True
+    return p
+
+def load_config_data(config_path: str = "cv_config.json") -> Dict[str, Any]:
+    """
+    Load CV configuration from a JSON file with error handling.
+    
+    Args:
+        config_path: Path to the JSON configuration file
+        
+    Returns:
+        Dictionary containing CV configuration data
+    """
+    try:
+        if not os.path.exists(config_path):
+            raise FileNotFoundError(f"Configuration file not found: {config_path}")
+        
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config = json.load(f)
+        
+        # Validate required fields
+        required_fields = ['name', 'title', 'email', 'phone']
+        missing_fields = [field for field in required_fields if field not in config]
+        
+        if missing_fields:
+            raise ValueError(f"Missing required fields in configuration: {', '.join(missing_fields)}")
+        
+        return config
+    
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+        print("Please create a cv_config.json file with your CV data.")
+        sys.exit(1)
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON in configuration file: {e}")
+        sys.exit(1)
+    except ValueError as e:
+        print(f"Error: {e}")
+        sys.exit(1)
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(7)
     p.paragraph_format.space_after = Pt(2)

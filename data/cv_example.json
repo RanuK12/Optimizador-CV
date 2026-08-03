@@ -1,0 +1,164 @@
+{
+  "name": "Emilio Ranucoli",
+  "title": "Machine Learning Engineer | Data Scientist | AI Engineer",
+  "email": "emilio@ranuk.dev",
+  "phone": "+39 344 5721753",
+  "linkedin": "https://linkedin.com/in/emilio-ranucoli",
+  "github": "https://github.com/RanuK12",
+  "website": "https://ranuk.dev",
+  "experience": [
+    {
+      "role": "Machine Learning Engineer (Contract)",
+      "company": "Booking.com",
+      "location": "Amsterdam, Netherlands",
+      "start_date": "2025-05",
+      "end_date": "2025-10",
+      "description": "• Led a dynamic pricing optimization system deploying ML models (Python, Scikit-learn, XGBoost, neural networks) for real-time price adjustments.\n• Analyzed 5M+ historical booking records improving segmentation and campaign effectiveness.\n• Integrated models into Booking.com's AWS production environment.\n• Contributed to a 12% improvement in promotional targeting accuracy."
+    },
+    {
+      "role": "Python Developer",
+      "company": "Eurobrico S.p.A.",
+      "location": "Villa Castel Ivano, Italy",
+      "start_date": "2024-11",
+      "end_date": "2025-04",
+      "description": "• Developed and maintained internal apps to optimize inventory management and retail operations.\n• Implemented data integration and automation tools, reducing manual errors.\n• Translated business needs into technology solutions with department heads."
+    },
+    {
+      "role": "Data Science Analyst / Sr. Analyst - Supply Chain & Operations",
+      "company": "Accenture",
+      "location": "Argentina (Remote)",
+      "start_date": "2024-06",
+      "end_date": "2024-11",
+      "description": "• Built predictive and optimization models for supply chain (Python, SQL, Power BI).\n• Applied ML to forecast demand and optimize inventory, achieving 15% cost reduction.\n• Created interactive Tableau/Power BI dashboards.\n• Worked in Scrum teams."
+    },
+    {
+      "role": "Data Analyst & Power BI Specialist",
+      "company": "Government of Cordoba",
+      "location": "Cordoba, Argentina",
+      "start_date": "2023-11",
+      "end_date": "2024-06",
+      "description": "• Designed and maintained 15+ Power BI dashboards for public works KPIs.\n• Cleaned and modeled 200K+ record datasets, improving report accuracy by 30%.\n• Automated certification reporting, reducing manual effort by 40%."
+    },
+    {
+      "role": "Data Annotation & Evaluation",
+      "company": "Appen",
+      "location": "Argentina (Remote)",
+      "start_date": "2023-01",
+      "end_date": "2024-04",
+      "description": "• Annotated and evaluated data for AI projects, improving NLP model accuracy.\n• Collaborated with global teams on data collection and QC."
+    },
+    {
+      "role": "Purchasing & Inventory Analyst",
+      "company": "Farmasut",
+      "location": "Cordoba, Argentina",
+      "start_date": "2015-11",
+      "end_date": "2023-10",
+      "description": "• Inventory audits and sales analysis with Tableau, reducing expiration losses by 15%.\n• Optimized delivery routes, decreasing logistics costs.\n• Built forecasting reports for purchasing."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Systems Engineer",
+      "institution": "National Technological University (UTN)",
+      "start_date": "2018-02",
+      "end_date": "2024-02"
+    },
+    {
+      "degree": "Bachelor's in Business Administration",
+      "institution": "National University of Cordoba (UNC)",
+      "start_date": "2015-02",
+      "end_date": "present"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Crypto Analysis Dashboard",
+      "description": "Cryptocurrency market analysis system with real-time data, algorithmic trading strategies, and modern web interface. (Python, Streamlit, Plotly, Binance API, ML, Telegram Bot)"
+    },
+    {
+      "name": "ETL Big Data Pipeline",
+      "description": "Automated ETL pipeline for financial data processing, backtesting trading strategies, and risk analysis. (Python, ETL, Backtesting, Risk Metrics, API Integration)"
+    },
+    {
+      "name": "JobConnect - AI Job Finder",
+      "description": "Web platform using AI to match CVs with job opportunities across multiple platforms. (Flask, AI/NLP, Web Scraping, Tailwind CSS)"
+    }
+  ],
+  "skills": {
+    "languages": [
+      "Python (Pandas, NumPy, Scikit-learn, TensorFlow, Keras)",
+      "SQL",
+      "C#",
+      "Java",
+      "JavaScript"
+    ],
+    "ml": [
+      "Scikit-learn",
+      "TensorFlow",
+      "Keras",
+      "XGBoost",
+      "Pandas",
+      "NumPy",
+      "Deep Learning",
+      "MLOps"
+    ],
+    "cloud": [
+      "AWS (Certified)",
+      "Azure",
+      "GCP",
+      "Kubernetes",
+      "Git/GitHub",
+      "CI/CD",
+      "Docker"
+    ],
+    "tools": [
+      "PostgreSQL",
+      "MongoDB",
+      "MySQL",
+      "SQL Server",
+      "Data Modeling",
+      "Data Warehouse",
+      "Power BI (PL-300 Certified)",
+      "Tableau",
+      "Looker",
+      "Excel",
+      "DAX",
+      "Statistical Analysis",
+      "ETL Pipelines",
+      "RESTful APIs",
+      "JSON",
+      "Data Wrangling",
+      "Data Analysis",
+      "Agile/Scrum",
+      "Problem-Solving",
+      "Analytical Thinking",
+      "Communication",
+      "Teamwork"
+    ]
+  },
+  "languages": [
+    {
+      "language": "English",
+      "proficiency": "Fluent"
+    },
+    {
+      "language": "Spanish",
+      "proficiency": "Native"
+    },
+    {
+      "language": "Italian",
+      "proficiency": "Native"
+    }
+  ],
+  "certifications": [
+    "Microsoft Power BI Data Analyst (PL-300) - Microsoft (2024)",
+    "Machine Learning with Python - IBM (2025)",
+    "Deep Learning Fundamentals - IBM (2025)",
+    "Deep Learning with TensorFlow - IBM (2025)",
+    "Python (Basic) Certificate - HackerRank (2026)",
+    "Software Engineer Certificate - HackerRank (2026)",
+    "AWS Cloud Practitioner - Amazon Web Services (2024)",
+    "Google Data Analytics Professional Certificate - Google (2024)",
+    "Intermediate Machine Learning - Kaggle (2024)"
+  ]
+}
