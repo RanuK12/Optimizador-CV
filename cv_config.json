@@ -1,0 +1,59 @@
+{
+  "name": "Emilio Ranucoli",
+  "title": "Machine Learning Engineer",
+  "email": "emilio@ranuk.dev",
+  "phone": "+39 344 5721753",
+  "linkedin": "https://linkedin.com/in/emilio-ranucoli",
+  "github": "https://github.com/RanuK12",
+  "summary": "Machine Learning Engineer with 10+ years of experience in developing AI solutions for complex problems. Specialized in natural language processing, computer vision, and predictive analytics. Passionate about creating innovative solutions that drive business value.",
+  "experience": [
+    {
+      "company": "Ranuk IT Solutions",
+      "title": "Lead Machine Learning Engineer",
+      "dates": "2020 - Present",
+      "description": "Led development of AI-powered solutions for clients in various industries including healthcare, finance, and e-commerce. Implemented NLP systems for sentiment analysis and computer vision solutions for quality control."
+    },
+    {
+      "company": "Tech Innovations Inc",
+      "title": "Senior Data Scientist",
+      "dates": "2017 - 2020",
+      "description": "Developed predictive models for customer behavior analysis and recommendation systems. Improved model accuracy by 35% through advanced feature engineering and ensemble methods."
+    },
+    {
+      "company": "Data Analytics Corp",
+      "title": "Machine Learning Engineer",
+      "dates": "2015 - 2017",
+      "description": "Built and deployed production ML pipelines for real-time data processing. Created automated systems for data preprocessing, model training, and deployment."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Systems Engineer",
+      "institution": "National Technological University (UTN)",
+      "dates": "2018 - 2024"
+    },
+    {
+      "degree": "Bachelor's in Business Administration",
+      "institution": "National University of Cordoba (UNC)",
+      "dates": "2015 - Present"
+    }
+  ],
+  "skills": [
+    "Python",
+    "TensorFlow",
+    "PyTorch",
+    "Scikit-learn",
+    "Natural Language Processing",
+    "Computer Vision",
+    "Deep Learning",
+    "Data Mining",
+    "Machine Learning",
+    "Artificial Intelligence",
+    "Data Visualization",
+    "SQL",
+    "MongoDB",
+    "AWS",
+    "Docker",
+    "Kubernetes"
+  ]
+}
