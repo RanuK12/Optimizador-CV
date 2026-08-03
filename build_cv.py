@@ -9,9 +9,10 @@ import os
 import sys
 from typing import Dict, Any
 
+# Import the shared configuration loader
+from config_loader import load_config
+
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
-DOCX_PATH = os.path.join(OUT_DIR, "EmilioRanucoli_MLEngineer.docx")
-PDF_PATH  = os.path.join(OUT_DIR, "EmilioRanucoli_MLEngineer.pdf")
 
 NAVY  = RGBColor(0x1A, 0x36, 0x5D)
 BLACK = RGBColor(0x11, 0x11, 0x11)
@@ -59,48 +60,30 @@ def heading(text):
     run.font.bold = True
     return p
 
-def load_config_data(config_path: str = "cv_config.json") -> Dict[str, Any]:
-    """
-    Load CV configuration from a JSON file with error handling.
-    
-    Args:
-        config_path: Path to the JSON configuration file
-        
-    Returns:
-        Dictionary containing CV configuration data
-    """
+def main():
+    """Main function to generate CV from configuration."""
+    # Determine config path from CLI argument, default to cv_config.json
+    if len(sys.argv) > 1:
+        config_path = sys.argv[1]
+    else:
+        config_path = "cv_config.json"
+
+    # Load configuration using the shared loader
     try:
-        if not os.path.exists(config_path):
-            raise FileNotFoundError(f"Configuration file not found: {config_path}")
-        
-        with open(config_path, 'r', encoding='utf-8') as f:
-            config = json.load(f)
-        
-        # Validate required fields
-        required_fields = ['name', 'title', 'email', 'phone']
-        missing_fields = [field for field in required_fields if field not in config]
-        
-        if missing_fields:
-            raise ValueError(f"Missing required fields in configuration: {', '.join(missing_fields)}")
-        
-        return config
-    
-    except FileNotFoundError as e:
-        print(f"Error: {e}")
-        print("Please create a cv_config.json file with your CV data.")
-        sys.exit(1)
-    except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in configuration file: {e}")
-        sys.exit(1)
-    except ValueError as e:
+        config = load_config(config_path)
+    except (FileNotFoundError, json.JSONDecodeError, ValueError) as e:
         print(f"Error: {e}")
         sys.exit(1)
 
-def main():
-    """Main function to generate CV from configuration."""
-    # Load configuration
-    config = load_config_data()
-    
+    # Determine output DOCX path:
+    # 1) Use optional "output_docx" field from config if present
+    # 2) Otherwise derive from config filename (replace .json with .docx)
+    if "output_docx" in config and config["output_docx"]:
+        docx_path = config["output_docx"]
+    else:
+        base = os.path.splitext(os.path.basename(config_path))[0]
+        docx_path = os.path.join(OUT_DIR, f"{base}.docx")
+
     # Add header section
     heading(config['name'])
     p = doc.add_paragraph()
@@ -108,7 +91,7 @@ def main():
     run.font.size = Pt(11)
     run.font.color.rgb = NAVY
     run.font.bold = True
-    
+
     # Contact information
     p = doc.add_paragraph()
     contact_info = f"{config['email']} | {config['phone']}"
@@ -117,13 +100,13 @@ def main():
     if 'github' in config:
         contact_info += f" | {config['github']}"
     p.add_run(contact_info)
-    
+
     # Add sections from config
     if 'summary' in config:
         heading("Summary")
         p = doc.add_paragraph(config['summary'])
         p.paragraph_format.space_after = Pt(6)
-    
+
     if 'experience' in config:
         heading("Experience")
         for exp in config['experience']:
@@ -131,12 +114,12 @@ def main():
             p.add_run(exp['company']).bold = True
             p.add_run(f" | {exp['title']} | {exp['dates']}")
             p.paragraph_format.space_after = Pt(3)
-            
+
             if 'description' in exp:
                 desc = doc.add_paragraph(exp['description'])
                 desc.paragraph_format.left_indent = Cm(0.5)
                 desc.paragraph_format.space_after = Pt(3)
-    
+
     if 'education' in config:
         heading("Education")
         for edu in config['education']:
@@ -144,16 +127,16 @@ def main():
             p.add_run(edu['degree']).bold = True
             p.add_run(f" | {edu['institution']} | {edu['dates']}")
             p.paragraph_format.space_after = Pt(3)
-    
+
     if 'skills' in config:
         heading("Skills")
         skills_text = ", ".join(config['skills'])
         p = doc.add_paragraph(skills_text)
         p.paragraph_format.space_after = Pt(6)
-    
+
     # Save document
-    doc.save(DOCX_PATH)
-    print(f"CV generated successfully: {DOCX_PATH}")
+    doc.save(docx_path)
+    print(f"CV generated successfully: {docx_path}")
 
 if __name__ == "__main__":
     main()
