@@ -1,13 +1,17 @@
 """Generate ATS-optimized CV (DOCX + PDF) using configuration data."""
+import argparse
+import json
+import os
+import sys
+from typing import Dict, Any
+
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
-import json
-import os
-import sys
-from typing import Dict, Any
+
+from config_loader import load_config
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 DOCX_PATH = os.path.join(OUT_DIR, "EmilioRanucoli_MLEngineer.docx")
@@ -29,6 +33,7 @@ for section in doc.sections:
     section.left_margin = Cm(1.6)
     section.right_margin = Cm(1.6)
 
+
 def add_hyperlink(paragraph, url, text, size=10):
     part = paragraph.part
     r_id = part.relate_to(url,
@@ -47,6 +52,7 @@ def add_hyperlink(paragraph, url, text, size=10):
     hyperlink.append(new_run)
     paragraph._p.append(hyperlink)
 
+
 def heading(text):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(7)
@@ -59,47 +65,21 @@ def heading(text):
     run.font.bold = True
     return p
 
-def load_config_data(config_path: str = "cv_config.json") -> Dict[str, Any]:
-    """
-    Load CV configuration from a JSON file with error handling.
-    
-    Args:
-        config_path: Path to the JSON configuration file
-        
-    Returns:
-        Dictionary containing CV configuration data
-    """
-    try:
-        if not os.path.exists(config_path):
-            raise FileNotFoundError(f"Configuration file not found: {config_path}")
-        
-        with open(config_path, 'r', encoding='utf-8') as f:
-            config = json.load(f)
-        
-        # Validate required fields
-        required_fields = ['name', 'title', 'email', 'phone']
-        missing_fields = [field for field in required_fields if field not in config]
-        
-        if missing_fields:
-            raise ValueError(f"Missing required fields in configuration: {', '.join(missing_fields)}")
-        
-        return config
-    
-    except FileNotFoundError as e:
-        print(f"Error: {e}")
-        print("Please create a cv_config.json file with your CV data.")
-        sys.exit(1)
-    except json.JSONDecodeError as e:
-        print(f"Error: Invalid JSON in configuration file: {e}")
-        sys.exit(1)
-    except ValueError as e:
-        print(f"Error: {e}")
-        sys.exit(1)
 
 def main():
-    """Main function to generate CV from configuration."""
+    parser = argparse.ArgumentParser(
+        description="Generate ATS-optimized CV (DOCX) from a JSON config file."
+    )
+    parser.add_argument(
+        "config",
+        nargs="?",
+        default="cv_config.json",
+        help="Path to JSON config file (default: cv_config.json)"
+    )
+    args = parser.parse_args()
+
     # Load configuration
-    config = load_config_data()
+    config = load_config(args.config)
     
     # Add header section
     heading(config['name'])
@@ -154,6 +134,7 @@ def main():
     # Save document
     doc.save(DOCX_PATH)
     print(f"CV generated successfully: {DOCX_PATH}")
+
 
 if __name__ == "__main__":
     main()

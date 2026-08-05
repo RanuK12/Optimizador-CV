@@ -2,7 +2,9 @@
 
 import json
 import os
-from typing import Dict, Any, Optional
+import sys
+from typing import Dict, Any
+
 
 def load_config(config_path: str = "cv_config.json") -> Dict[str, Any]:
     """
@@ -37,47 +39,24 @@ def load_config(config_path: str = "cv_config.json") -> Dict[str, Any]:
     
     return config
 
+
 def validate_config(config: Dict[str, Any]) -> None:
     """
-    Validate the configuration data structure.
+    Soft validation: warns about missing optional sections but doesn't fail.
     
     Args:
         config: Configuration dictionary to validate
-        
-    Raises:
-        ValueError: If configuration structure is invalid
     """
-    # Check if all main sections exist
-    required_sections = ['experience', 'education', 'skills', 'languages']
-    missing_sections = [section for section in required_sections if section not in config]
+    optional_sections = {
+        'summary': 'professional summary',
+        'experience': 'work experience',
+        'education': 'education history',
+        'skills': 'skills list',
+        'languages': 'languages',
+        'certifications': 'certifications',
+        'projects': 'projects',
+    }
     
-    if missing_sections:
-        raise ValueError(f"Missing required sections in configuration: {', '.join(missing_sections)}")
-    
-    # Validate experience section
-    if not isinstance(config['experience'], list):
-        raise ValueError("'experience' must be a list")
-    
-    for exp in config['experience']:
-        if not all(key in exp for key in ['role', 'company', 'location']):
-            raise ValueError("Each experience entry must have 'role', 'company', and 'location'")
-    
-    # Validate education section
-    if not isinstance(config['education'], list):
-        raise ValueError("'education' must be a list")
-    
-    for edu in config['education']:
-        if not all(key in edu for key in ['degree', 'institution']):
-            raise ValueError("Each education entry must have 'degree' and 'institution'")
-    
-    # Validate skills section
-    if 'skills' not in config:
-        raise ValueError("'skills' section is required")
-    
-    # Validate languages section
-    if not isinstance(config['languages'], list):
-        raise ValueError("'languages' must be a list")
-    
-    for lang in config['languages']:
-        if not all(key in lang for key in ['language', 'proficiency']):
-            raise ValueError("Each language entry must have 'language' and 'proficiency'")
+    for section, label in optional_sections.items():
+        if section not in config:
+            print(f"Note: '{section}' section ({label}) not found in config.", file=sys.stderr)
