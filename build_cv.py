@@ -14,8 +14,6 @@ from docx.oxml import OxmlElement
 from config_loader import load_config
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
-DOCX_PATH = os.path.join(OUT_DIR, "EmilioRanucoli_MLEngineer.docx")
-PDF_PATH  = os.path.join(OUT_DIR, "EmilioRanucoli_MLEngineer.pdf")
 
 NAVY  = RGBColor(0x1A, 0x36, 0x5D)
 BLACK = RGBColor(0x11, 0x11, 0x11)
@@ -76,10 +74,26 @@ def main():
         default="cv_config.json",
         help="Path to JSON config file (default: cv_config.json)"
     )
+    parser.add_argument(
+        "--output",
+        "-o",
+        default=None,
+        help="Output filename (without extension). Default: uses name from config"
+    )
     args = parser.parse_args()
 
     # Load configuration
     config = load_config(args.config)
+    
+    # Determine output filename
+    if args.output:
+        base_name = args.output
+    else:
+        # Use name from config or default to "CV"
+        base_name = config.get('name', 'CV').replace(' ', '_')
+    
+    DOCX_PATH = os.path.join(OUT_DIR, f"{base_name}.docx")
+    PDF_PATH  = os.path.join(OUT_DIR, f"{base_name}.pdf")
     
     # Add header section
     heading(config['name'])
