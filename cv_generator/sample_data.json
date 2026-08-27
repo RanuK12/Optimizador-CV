@@ -1,0 +1,40 @@
+{
+  "personal": {
+    "name": "Juan Pérez",
+    "title": "Ingeniero de Software",
+    "email": "juan.perez@example.com",
+    "phone": "+34 600 123 456",
+    "linkedin": "https://linkedin.com/in/juanperez"
+  },
+  "education": [
+    {
+      "degree": "Máster en Ingeniería Informática",
+      "institution": "Universidad Politécnica de Madrid",
+      "year": "2020"
+    },
+    {
+      "degree": "Grado en Ingeniería de Telecomunicaciones",
+      "institution": "Universidad de Sevilla",
+      "year": "2018"
+    }
+  ],
+  "experience": [
+    {
+      "position": "Desarrollador Backend",
+      "company": "Tech Solutions S.L.",
+      "period": "2020‑Presente",
+      "details": [
+        "Diseño e implementación de APIs RESTful con Python y Django.",
+        "Optimización de bases de datos PostgreSQL, reduciendo tiempos de consulta en un 30%."
+      ]
+    }
+  ],
+  "skills": [
+    "Python",
+    "Django",
+    "Docker",
+    "Kubernetes",
+    "Git",
+    "SQL"
+  ]
+}

@@ -1,28 +1,37 @@
-name: John Doe
-title: Senior Data Scientist
-cargo: Data Scientist
-email: johndoe@example.com
-phone: +1 555 123 4567
-linkedin: linkedin.com/in/johndoe
-github: github.com/johndoe
-summary: Results-driven Data Scientist with 8+ years of experience in machine learning, big data analytics, and AI-driven solutions. Expert in Python, SQL, and cloud platforms.
+name: "John Doe"
+title: "Senior Software Engineer"
+email: "john.doe@example.com"
+phone: "+1 (555) 123-4567"
+linkedin: "https://linkedin.com/in/johndoe"
+github: "https://github.com/johndoe"
+
+summary: "Experienced software engineer with 8+ years of expertise in developing scalable applications and leading cross-functional teams. Passionate about clean code, system architecture, and mentoring junior developers."
+
 experience:
-  - company: TechCorp Inc.
-    title: Senior Data Scientist
-    dates: 2020-01 - Present
-    description: "Led ML team to develop predictive models increasing revenue by 25%. Designed data pipelines processing 1TB+ daily data."
-  - company: DataStart
-    title: Data Scientist
-    dates: 2018-06 - 2019-12
-    description: "Built recommendation engine improving user engagement by 40%. Optimized database queries reducing latency by 60%."
+  - company: "Tech Innovations Inc."
+    title: "Senior Software Engineer"
+    dates: "2019 - Present"
+    description: "Led development of microservices architecture serving 1M+ users. Implemented CI/CD pipelines reducing deployment time by 40%. Mentored 5 junior developers and established coding standards."
+  
+  - company: "Digital Solutions Ltd."
+    title: "Software Engineer"
+    dates: "2016 - 2019"
+    description: "Developed and maintained REST APIs using Node.js and Python. Collaborated with UX team to improve user experience. Implemented automated testing covering 90% of codebase."
+
 education:
-  - degree: MSc in Data Science
-    institution: University of Technology
-    dates: 2016-09 - 2018-06
+  - degree: "Bachelor of Science in Computer Science"
+    institution: "University of Technology"
+    dates: "2012 - 2016"
+
 skills:
-  - Machine Learning
-  - Deep Learning
-  - Python (Pandas, Scikit-learn, TensorFlow)
-  - Big Data (Hadoop, Spark)
-  - Cloud (AWS, GCP)
-  - Data Visualization (Tableau, Power BI)
+  - "Python"
+  - "JavaScript"
+  - "TypeScript"
+  - "Node.js"
+  - "React"
+  - "AWS"
+  - "Docker"
+  - "Kubernetes"
+  - "CI/CD"
+  - "Agile/Scrum"
+  - "Team Leadership"
