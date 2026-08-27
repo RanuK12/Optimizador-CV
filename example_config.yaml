@@ -1,0 +1,28 @@
+name: John Doe
+title: Senior Data Scientist
+cargo: Data Scientist
+email: johndoe@example.com
+phone: +1 555 123 4567
+linkedin: linkedin.com/in/johndoe
+github: github.com/johndoe
+summary: Results-driven Data Scientist with 8+ years of experience in machine learning, big data analytics, and AI-driven solutions. Expert in Python, SQL, and cloud platforms.
+experience:
+  - company: TechCorp Inc.
+    title: Senior Data Scientist
+    dates: 2020-01 - Present
+    description: "Led ML team to develop predictive models increasing revenue by 25%. Designed data pipelines processing 1TB+ daily data."
+  - company: DataStart
+    title: Data Scientist
+    dates: 2018-06 - 2019-12
+    description: "Built recommendation engine improving user engagement by 40%. Optimized database queries reducing latency by 60%."
+education:
+  - degree: MSc in Data Science
+    institution: University of Technology
+    dates: 2016-09 - 2018-06
+skills:
+  - Machine Learning
+  - Deep Learning
+  - Python (Pandas, Scikit-learn, TensorFlow)
+  - Big Data (Hadoop, Spark)
+  - Cloud (AWS, GCP)
+  - Data Visualization (Tableau, Power BI)
