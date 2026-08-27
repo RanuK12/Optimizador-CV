@@ -63,9 +63,17 @@ class CVValidator:
     @staticmethod
     def validate_required_fields(config: Dict[str, Any], section: str, required: List[str]) -> None:
         """Validate that all required fields exist in a section."""
-        for field in required:
-            if field not in config.get(section, {}):
-                raise CVValidationError(f"Missing required field '{field}' in {section} section")
+        if section == 'personal':
+            # Personal fields are at the top level of config
+            for field in required:
+                if field not in config:
+                    raise CVValidationError(f"Missing required field '{field}'")
+        else:
+            # Other sections are nested
+            section_data = config.get(section, {})
+            for field in required:
+                if field not in section_data:
+                    raise CVValidationError(f"Missing required field '{field}' in {section} section")
     
     @staticmethod
     def validate_unknown_fields(config: Dict[str, Any], section: str, valid_fields: List[str]) -> None:
