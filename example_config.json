@@ -1,37 +1,47 @@
 {
-  "name": "Your Name",
-  "title": "Your Professional Title",
-  "email": "your.email@example.com",
-  "phone": "+1 (555) 123-4567",
-  "linkedin": "https://linkedin.com/in/yourprofile",
-  "github": "https://github.com/yourusername",
-  "summary": "A brief professional summary highlighting your key skills, experience, and career objectives. Focus on what makes you unique and valuable to potential employers.",
+  "name": "Jane Smith",
+  "title": "Data Scientist",
+  "email": "jane.smith@example.com",
+  "phone": "+1 (555) 987-6543",
+  "linkedin": "https://linkedin.com/in/janesmith",
+  "github": "https://github.com/janesmith",
+  "summary": "Data scientist with 6+ years of experience in machine learning, statistical analysis, and data visualization. Expert in translating complex data insights into actionable business strategies.",
   "experience": [
     {
-      "company": "Company Name",
-      "title": "Your Job Title",
-      "dates": "Start Date - End Date",
-      "description": "Describe your responsibilities and achievements in this role. Use bullet points for clarity and quantify your impact when possible."
+      "company": "Analytics Corp",
+      "title": "Senior Data Scientist",
+      "dates": "2018 - Present",
+      "description": "Developed predictive models increasing customer retention by 25%. Led team of 3 data scientists. Implemented A/B testing framework resulting in 15% improvement in conversion rates."
     },
     {
-      "company": "Previous Company",
-      "title": "Previous Title",
-      "dates": "Start Date - End Date",
-      "description": "Your key responsibilities and accomplishments in this position."
+      "company": "Data Solutions Ltd.",
+      "title": "Data Scientist",
+      "dates": "2016 - 2018",
+      "description": "Built recommendation systems for e-commerce platform. Created data pipelines processing 10M+ records daily. Collaborated with engineering team to deploy models to production."
     }
   ],
   "education": [
     {
-      "degree": "Degree Name",
-      "institution": "University/College Name",
-      "dates": "Graduation Year"
+      "degree": "Master of Science in Data Science",
+      "institution": "University of Data Science",
+      "dates": "2014 - 2016"
+    },
+    {
+      "degree": "Bachelor of Science in Statistics",
+      "institution": "State University",
+      "dates": "2010 - 2014"
     }
   ],
   "skills": [
-    "Skill 1",
-    "Skill 2",
-    "Skill 3",
-    "Skill 4",
-    "Skill 5"
+    "Python",
+    "R",
+    "SQL",
+    "Machine Learning",
+    "Statistical Analysis",
+    "Data Visualization",
+    "TensorFlow",
+    "PyTorch",
+    "Spark",
+    "AWS"
   ]
 }
