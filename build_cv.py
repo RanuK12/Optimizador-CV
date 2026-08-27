@@ -12,6 +12,7 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 from config_loader import load_config
+from cv_validator import CVValidator, CVValidationError
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -84,6 +85,14 @@ def main():
 
     # Load configuration
     config = load_config(args.config)
+    
+    # Validate configuration
+    try:
+        CVValidator.validate(config)
+        print("✅ Configuration validation passed")
+    except CVValidationError as e:
+        print(f"❌ Configuration validation failed: {str(e)}")
+        sys.exit(1)
     
     # Determine output filename
     if args.output:

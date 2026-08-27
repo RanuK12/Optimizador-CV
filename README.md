@@ -25,7 +25,7 @@ Para ejecutar el generador localmente, necesitas tener instalado Python 3 y las 
 
 1. **Instalar dependencias:**
    ```bash
-   pip install python-docx docx2pdf
+   pip install python-docx docx2pdf PyYAML
    ```
 
 2. *(Opcional)* **docx2pdf:** Esta biblioteca utiliza la API de Microsoft Word para realizar la conversión a PDF con total fidelidad visual. Requiere que Microsoft Word esté instalado en el sistema operativo (compatible con Windows y macOS).
@@ -40,9 +40,36 @@ python build_cv.py
 
 ### Flujo del script:
 1. Lee las especificaciones de formato y el contenido del CV desde `cv_config.json`.
-2. Crea e inserta los estilos, márgenes, hipervínculos, secciones y tablas requeridas.
-3. Guarda el archivo `.docx` localmente.
-4. Llama a la herramienta `docx2pdf` para exportar la versión en `.pdf`.
+2. **Valida** la configuración para asegurar que todos los campos requeridos están presentes y en el formato correcto.
+3. Crea e inserta los estilos, márgenes, hipervínculos, secciones y tablas requeridas.
+4. Guarda el archivo `.docx` localmente.
+5. Llama a la herramienta `docx2pdf` para exportar la versión en `.pdf`.
+
+### Validación de Configuración
+
+El generador ahora incluye un sistema de validación que verifica:
+
+- ✅ Campos requeridos presentes (name, title, email, phone)
+- ✅ Formato de email válido
+- ✅ Formato consistente de fechas (YYYY - YYYY, YYYY - Presente, etc.)
+- ✅ Estructura correcta de experiencia y educación
+- ✅ Sin campos desconocidos en la configuración
+
+Si la validación falla, el script mostrará un mensaje de error específico y no generará el CV.
+
+### Validación Independiente
+
+Puedes validar tu archivo de configuración independientemente:
+
+```bash
+python cv_validator.py cv_config.json
+```
+
+O usar el script de demostración:
+
+```bash
+python demo.py --create-demo --validate --generate
+```
 
 ## 📝 Personalización del CV
 
@@ -98,10 +125,11 @@ Si utilizas un modelo de Inteligencia Artificial (LLM) para procesar, ampliar o 
 El proyecto se encuentra en fase activa de desarrollo. Los siguientes pasos están planificados:
 
 1. **Plantillas Múltiples:** Implementar diferentes plantillas de CV según la industria (ej. tech, consultoría, académico).
-2. **Validación Automática:** Agregar validación de contenido para asegurar que todos los campos requeridos estén presentes.
+2. **✅ Validación Automática:** Implementada - El sistema ahora valida todos los campos requeridos y formatos.
 3. **Integración con LinkedIn:** Permitir importación de datos desde LinkedIn para facilitar la actualización del CV.
 4. **Soporte Multi-idioma:** Agregar soporte para generar CVs en diferentes idiomas.
 5. **Exportación a Formatos Adicionales:** Soporte para HTML y LaTeX.
+6. **Interfaz Gráfica:** Desarrollar una interfaz de usuario más amigable para la configuración del CV.
 
 ## 📄 Licencia
 
