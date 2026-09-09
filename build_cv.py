@@ -14,7 +14,8 @@ from docx.oxml import OxmlElement
 from config_loader import load_config
 from cv_validator import CVValidator, CVValidationError
 
-OUT_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.join(SCRIPT_DIR, 'cv_generator'))
 
 NAVY  = RGBColor(0x1A, 0x36, 0x5D)
 BLACK = RGBColor(0x11, 0x11, 0x11)
@@ -67,24 +68,17 @@ def heading(text):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate ATS-optimized CV (DOCX) from a JSON config file."
+        description="Generate ATS-optimized CV (DOCX + PDF) from a JSON or YAML config file."
     )
     parser.add_argument(
-        "config",
-        nargs="?",
-        default="cv_config.json",
-        help="Path to JSON config file (default: cv_config.json)"
-    )
-    parser.add_argument(
-        "--output",
-        "-o",
-        default=None,
-        help="Output filename (without extension). Default: uses name from config"
+        "--input",
+        default="examples/example.yaml",
+        help="Path to input configuration file (YAML or JSON, default: examples/example.yaml)"
     )
     args = parser.parse_args()
 
     # Load configuration
-    config = load_config(args.config)
+    config = load_config(args.input)
     
     # Validate configuration
     try:
@@ -94,15 +88,14 @@ def main():
         print(f"❌ Configuration validation failed: {str(e)}")
         sys.exit(1)
     
-    # Determine output filename
-    if args.output:
-        base_name = args.output
-    else:
-        # Use name from config or default to "CV"
-        base_name = config.get('name', 'CV').replace(' ', '_')
+    # Determine output directory: same as the input file's directory
+    output_dir = os.path.dirname(os.path.abspath(args.input))
     
-    DOCX_PATH = os.path.join(OUT_DIR, f"{base_name}.docx")
-    PDF_PATH  = os.path.join(OUT_DIR, f"{base_name}.pdf")
+    # Determine output filename
+    base_name = config.get('name', 'CV').replace(' ', '_')
+    
+    DOCX_PATH = os.path.join(output_dir, f"{base_name}.docx")
+    PDF_PATH  = os.path.join(output_dir, f"{base_name}.pdf")
     
     # Add header section
     heading(config['name'])
