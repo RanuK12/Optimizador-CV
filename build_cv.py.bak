@@ -71,14 +71,14 @@ def main():
         description="Generate ATS-optimized CV (DOCX + PDF) from a JSON or YAML config file."
     )
     parser.add_argument(
-        "--data",
-        default="data/example.yaml",
-        help="Path to input configuration file (YAML or JSON, default: data/example.yaml)"
+        "--input",
+        default="examples/example.yaml",
+        help="Path to input configuration file (YAML or JSON, default: examples/example.yaml)"
     )
     args = parser.parse_args()
 
     # Load configuration
-    config = load_config(args.data)
+    config = load_config(args.input)
     
     # Validate configuration
     try:
@@ -89,7 +89,7 @@ def main():
         sys.exit(1)
     
     # Determine output directory: same as the input file's directory
-    output_dir = os.path.dirname(os.path.abspath(args.data))
+    output_dir = os.path.dirname(os.path.abspath(args.input))
     
     # Determine output filename
     base_name = config.get('name', 'CV').replace(' ', '_')

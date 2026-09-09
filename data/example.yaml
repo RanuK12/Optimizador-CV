@@ -1,0 +1,35 @@
+personal:
+  name: John Doe
+  title: Software Engineer
+  email: john.doe@example.com
+  phone: +1 555 123 4567
+  location: New York, USA
+  linkedin: https://linkedin.com/in/johndoe
+  github: https://github.com/johndoe
+summary: A software engineer with 5+ years of experience in full-stack development, specializing in JavaScript and Python.
+experience:
+  - company: Tech Corp
+    title: Senior Software Engineer
+    dates: 2020 - 2023
+    description: Developed web applications using React and Node.js. Led a team of 5 engineers. Improved application performance by 30%.
+  - company: Startup Inc
+    title: Software Engineer
+    dates: 2018 - 2020
+    description: Built RESTful APIs with Python and Django. Worked on CI/CD pipelines.
+education:
+  - degree: Bachelor's in Computer Science
+    institution: State University
+    dates: 2014 - 2018
+  - degree: High School Diploma
+    institution: Local High School
+    dates: 2010 - 2014
+skills:
+  - JavaScript
+  - Python
+  - React
+  - Node.js
+  - SQL
+  - Docker
+languages:
+  - English: Native
+  - Spanish: Intermediate
