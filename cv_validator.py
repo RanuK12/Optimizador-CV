@@ -21,7 +21,7 @@ REQUIRED_FIELDS: RequiredFields = {
 
 # Define optional fields
 OPTIONAL_FIELDS = {
-    'personal': ['linkedin', 'github', 'summary'],
+    'personal': ['linkedin', 'github', 'summary', 'website'],
     'experience': ['description'],
     'education': []
 }
@@ -160,8 +160,8 @@ class CVValidator:
             raise CVValidationError(f"Invalid email format: {config['email']}")
         
         # Check unknown fields in personal section (top-level)
-        # Allow also the known top-level sections: experience, education, skills, summary
-        allowed_personal = REQUIRED_FIELDS['personal'] + OPTIONAL_FIELDS['personal'] + ['experience', 'education', 'skills', 'summary']
+        # Allow also the known top-level sections: experience, education, skills, summary, languages, certifications
+        allowed_personal = REQUIRED_FIELDS['personal'] + OPTIONAL_FIELDS['personal'] + ['experience', 'education', 'skills', 'summary', 'languages', 'certifications']
         section_data = config
         for field in section_data:
             if field not in allowed_personal:

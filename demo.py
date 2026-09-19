@@ -95,7 +95,7 @@ def test_cv_generation(config_path: str):
     print(f"\n📄 Testing CV generation for: {config_path}")
     
     # Mock command line arguments
-    sys.argv = ['build_cv.py', config_path, '--output', 'demo_cv']
+    sys.argv = ['build_cv.py', '--data', config_path, '--output', 'demo_cv']
     
     try:
         build_cv_main()

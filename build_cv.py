@@ -127,15 +127,58 @@ def build_cv(config: Dict[str, Any], output_dir: str, base_name: str):
     print(f"CV generated successfully: {DOCX_PATH}")
 
     # Convert to PDF if possible
-    if DOCX2PDF_AVAILABLE:
-        PDF_PATH = os.path.join(output_dir, f"{base_name}.pdf")
+    PDF_PATH = os.path.join(output_dir, f"{base_name}.pdf")
+    # Try multiple methods: mammoth+weasyprint, docx2pdf, pandoc
+    pdf_generated = False
+    # Method 1: mammoth + weasyprint
+    try:
+        import mammoth
+        from weasyprint import HTML
+        with open(DOCX_PATH, "rb") as docx_file:
+            result = mammoth.convert_to_html(docx_file)
+            html = result.value  # The HTML string
+            # Write HTML to a temporary file
+            import tempfile
+            with tempfile.NamedTemporaryFile(suffix='.html', delete=False) as tmp_html:
+                tmp_html.write(html.encode('utf-8'))
+                tmp_html_path = tmp_html.name
+            HTML(tmp_html_path).write_pdf(PDF_PATH)
+            # Clean up temp file
+            os.unlink(tmp_html_path)
+        print(f"PDF generated successfully using mammoth+weasyprint: {PDF_PATH}")
+        pdf_generated = True
+    except Exception as e:
+        print(f"Warning: PDF generation with mammoth+weasyprint failed: {e}")
+    # Method 2: docx2pdf (with timeout)
+    if not pdf_generated and DOCX2PDF_AVAILABLE:
         try:
-            convert(DOCX_PATH, PDF_PATH)
-            print(f"PDF generated successfully: {PDF_PATH}")
+            import subprocess
+            result = subprocess.run(['docx2pdf', DOCX_PATH, PDF_PATH], 
+                                  timeout=30, check=True, capture_output=True, text=True)
+            print(f"PDF generated successfully using docx2pdf: {PDF_PATH}")
+            pdf_generated = True
+        except subprocess.TimeoutExpired:
+            print("Warning: PDF conversion with docx2pdf timed out after 30 seconds.")
+        except subprocess.CalledProcessError as e:
+            print(f"Warning: PDF conversion with docx2pdf failed: {e.stderr}")
         except Exception as e:
-            print(f"Warning: PDF conversion failed: {e}")
-    else:
-        print("Warning: docx2pdf not installed, skipping PDF generation.")
+            print(f"Warning: PDF conversion with docx2pdf failed: {e}")
+    # Method 3: pandoc
+    if not pdf_generated:
+        try:
+            import subprocess
+            result = subprocess.run(['pandoc', DOCX_PATH, '-o', PDF_PATH], 
+                                  timeout=30, check=True, capture_output=True, text=True)
+            print(f"PDF generated successfully using pandoc: {PDF_PATH}")
+            pdf_generated = True
+        except subprocess.TimeoutExpired:
+            print("Warning: PDF conversion with pandoc timed out after 30 seconds.")
+        except subprocess.CalledProcessError as e:
+            print(f"Warning: PDF conversion with pandoc failed: {e.stderr}")
+        except Exception as e:
+            print(f"Warning: PDF conversion with pandoc failed: {e}")
+    if not pdf_generated:
+        print("Warning: All PDF generation methods failed. Skipping PDF generation.")
 
 
 def main():
