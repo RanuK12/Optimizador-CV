@@ -63,14 +63,23 @@ class CVValidator:
     @staticmethod
     def validate_required_fields(config: Dict[str, Any], section: str, required: List[str]) -> None:
         """Validate that all required fields exist in a section."""
+        # If section is empty, we are checking the top-level config
+        if section == "":
+            section_data = config
+        else:
+            section_data = config.get(section, {})
         for field in required:
-            if field not in config.get(section, {}):
+            if field not in section_data:
                 raise CVValidationError(f"Missing required field '{field}' in {section} section")
     
     @staticmethod
     def validate_unknown_fields(config: Dict[str, Any], section: str, valid_fields: List[str]) -> None:
         """Validate that there are no unknown fields in a section."""
-        section_data = config.get(section, {})
+        # If section is empty, we are checking the top-level config
+        if section == "":
+            section_data = config
+        else:
+            section_data = config.get(section, {})
         for field in section_data:
             if field not in valid_fields:
                 raise CVValidationError(f"Unknown field '{field}' found in {section} section")
@@ -143,16 +152,20 @@ class CVValidator:
         Raises:
             CVValidationError: If validation fails with specific error message
         """
-        # Check personal information
-        CVValidator.validate_required_fields(config, 'personal', REQUIRED_FIELDS['personal'])
+        # Check personal information (top-level fields)
+        CVValidator.validate_required_fields(config, '', REQUIRED_FIELDS['personal'])
         
         # Validate email
         if not CVValidator.validate_email(config['email']):
             raise CVValidationError(f"Invalid email format: {config['email']}")
         
-        # Check unknown fields in personal section
-        all_personal_fields = REQUIRED_FIELDS['personal'] + OPTIONAL_FIELDS['personal']
-        CVValidator.validate_unknown_fields(config, 'personal', all_personal_fields)
+        # Check unknown fields in personal section (top-level)
+        # Allow also the known top-level sections: experience, education, skills, summary
+        allowed_personal = REQUIRED_FIELDS['personal'] + OPTIONAL_FIELDS['personal'] + ['experience', 'education', 'skills', 'summary']
+        section_data = config
+        for field in section_data:
+            if field not in allowed_personal:
+                raise CVValidationError(f"Unknown field '{field}' found in personal section")
         
         # Validate experience if present
         if 'experience' in config:

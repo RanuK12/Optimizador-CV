@@ -11,27 +11,17 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
+try:
+    from docx2pdf import convert
+    DOCX2PDF_AVAILABLE = True
+except ImportError:
+    DOCX2PDF_AVAILABLE = False
+
 from config_loader import load_config
 from cv_validator import CVValidator, CVValidationError
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(SCRIPT_DIR, 'cv_generator'))
-
 NAVY  = RGBColor(0x1A, 0x36, 0x5D)
 BLACK = RGBColor(0x11, 0x11, 0x11)
-
-doc = Document()
-
-style = doc.styles['Normal']
-style.font.name = 'Calibri'
-style.font.size = Pt(10.5)
-style.font.color.rgb = BLACK
-
-for section in doc.sections:
-    section.top_margin = Cm(1.2)
-    section.bottom_margin = Cm(1.2)
-    section.left_margin = Cm(1.6)
-    section.right_margin = Cm(1.6)
 
 
 def add_hyperlink(paragraph, url, text, size=10):
@@ -66,14 +56,103 @@ def heading(text):
     return p
 
 
+def build_cv(config: Dict[str, Any], output_dir: str, base_name: str):
+    global doc
+    doc = Document()
+
+    style = doc.styles['Normal']
+    style.font.name = 'Calibri'
+    style.font.size = Pt(10.5)
+    style.font.color.rgb = BLACK
+
+    for section in doc.sections:
+        section.top_margin = Cm(1.2)
+        section.bottom_margin = Cm(1.2)
+        section.left_margin = Cm(1.6)
+        section.right_margin = Cm(1.6)
+
+    # Add header section
+    heading(config['name'])
+    p = doc.add_paragraph()
+    run = p.add_run(config['title'])
+    run.font.size = Pt(11)
+    run.font.color.rgb = NAVY
+    run.font.bold = True
+
+    # Contact information
+    p = doc.add_paragraph()
+    contact_info = f"{config['email']} | {config['phone']}"
+    if 'linkedin' in config:
+        contact_info += f" | {config['linkedin']}"
+    if 'github' in config:
+        contact_info += f" | {config['github']}"
+    p.add_run(contact_info)
+
+    # Add sections from config
+    if 'summary' in config:
+        heading("Summary")
+        p = doc.add_paragraph(config['summary'])
+        p.paragraph_format.space_after = Pt(6)
+
+    if 'experience' in config:
+        heading("Experience")
+        for exp in config['experience']:
+            p = doc.add_paragraph()
+            p.add_run(exp['company']).bold = True
+            p.add_run(f" | {exp['title']} | {exp['dates']}")
+            p.paragraph_format.space_after = Pt(3)
+            
+            if 'description' in exp:
+                desc = doc.add_paragraph(exp['description'])
+                desc.paragraph_format.left_indent = Cm(0.5)
+                desc.paragraph_format.space_after = Pt(3)
+
+    if 'education' in config:
+        heading("Education")
+        for edu in config['education']:
+            p = doc.add_paragraph()
+            p.add_run(edu['degree']).bold = True
+            p.add_run(f" | {edu['institution']} | {edu['dates']}")
+            p.paragraph_format.space_after = Pt(3)
+
+    if 'skills' in config:
+        heading("Skills")
+        skills_text = ", ".join(config['skills'])
+        p = doc.add_paragraph(skills_text)
+        p.paragraph_format.space_after = Pt(6)
+
+    # Save document
+    DOCX_PATH = os.path.join(output_dir, f"{base_name}.docx")
+    doc.save(DOCX_PATH)
+    print(f"CV generated successfully: {DOCX_PATH}")
+
+    # Convert to PDF if possible
+    if DOCX2PDF_AVAILABLE:
+        PDF_PATH = os.path.join(output_dir, f"{base_name}.pdf")
+        try:
+            convert(DOCX_PATH, PDF_PATH)
+            print(f"PDF generated successfully: {PDF_PATH}")
+        except Exception as e:
+            print(f"Warning: PDF conversion failed: {e}")
+    else:
+        print("Warning: docx2pdf not installed, skipping PDF generation.")
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate ATS-optimized CV (DOCX + PDF) from a JSON or YAML config file."
+        description="Generate ATS-optimized CV (DOCX + PDF) from a YAML/JSON config file."
     )
     parser.add_argument(
         "--data",
-        default="data/example.yaml",
-        help="Path to input configuration file (YAML or JSON, default: data/example.yaml)"
+        "-d",
+        required=True,
+        help="Path to YAML/JSON config file with CV data (required)"
+    )
+    parser.add_argument(
+        "--output",
+        "-o",
+        default=None,
+        help="Output filename (without extension). Default: uses name from config"
     )
     args = parser.parse_args()
 
@@ -92,64 +171,9 @@ def main():
     output_dir = os.path.dirname(os.path.abspath(args.data))
     
     # Determine output filename
-    base_name = config.get('name', 'CV').replace(' ', '_')
+    base_name = args.output or config.get('name', 'CV').replace(' ', '_')
     
-    DOCX_PATH = os.path.join(output_dir, f"{base_name}.docx")
-    PDF_PATH  = os.path.join(output_dir, f"{base_name}.pdf")
-    
-    # Add header section
-    heading(config['name'])
-    p = doc.add_paragraph()
-    run = p.add_run(config['title'])
-    run.font.size = Pt(11)
-    run.font.color.rgb = NAVY
-    run.font.bold = True
-    
-    # Contact information
-    p = doc.add_paragraph()
-    contact_info = f"{config['email']} | {config['phone']}"
-    if 'linkedin' in config:
-        contact_info += f" | {config['linkedin']}"
-    if 'github' in config:
-        contact_info += f" | {config['github']}"
-    p.add_run(contact_info)
-    
-    # Add sections from config
-    if 'summary' in config:
-        heading("Summary")
-        p = doc.add_paragraph(config['summary'])
-        p.paragraph_format.space_after = Pt(6)
-    
-    if 'experience' in config:
-        heading("Experience")
-        for exp in config['experience']:
-            p = doc.add_paragraph()
-            p.add_run(exp['company']).bold = True
-            p.add_run(f" | {exp['title']} | {exp['dates']}")
-            p.paragraph_format.space_after = Pt(3)
-            
-            if 'description' in exp:
-                desc = doc.add_paragraph(exp['description'])
-                desc.paragraph_format.left_indent = Cm(0.5)
-                desc.paragraph_format.space_after = Pt(3)
-    
-    if 'education' in config:
-        heading("Education")
-        for edu in config['education']:
-            p = doc.add_paragraph()
-            p.add_run(edu['degree']).bold = True
-            p.add_run(f" | {edu['institution']} | {edu['dates']}")
-            p.paragraph_format.space_after = Pt(3)
-    
-    if 'skills' in config:
-        heading("Skills")
-        skills_text = ", ".join(config['skills'])
-        p = doc.add_paragraph(skills_text)
-        p.paragraph_format.space_after = Pt(6)
-    
-    # Save document
-    doc.save(DOCX_PATH)
-    print(f"CV generated successfully: {DOCX_PATH}")
+    build_cv(config, output_dir, base_name)
 
 
 if __name__ == "__main__":

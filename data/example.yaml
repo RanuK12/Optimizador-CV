@@ -1,35 +1,72 @@
-personal:
-  name: John Doe
-  title: Software Engineer
-  email: john.doe@example.com
-  phone: +1 555 123 4567
-  location: New York, USA
-  linkedin: https://linkedin.com/in/johndoe
-  github: https://github.com/johndoe
-summary: A software engineer with 5+ years of experience in full-stack development, specializing in JavaScript and Python.
+name: Jane Doe
+title: Software Engineer | Full-stack Developer
+email: jane.doe@example.com
+phone: "+1 555 123 4567"
+linkedin: https://linkedin.com/in/janedoe
+github: https://github.com/janedoe
+website: https://janedoe.dev
+summary: Experienced software engineer with a passion for building scalable web applications and solving complex problems. Skilled in multiple programming languages and frameworks, with a strong focus on delivering high-quality code and excellent user experience.
 experience:
-  - company: Tech Corp
-    title: Senior Software Engineer
-    dates: 2020 - 2023
-    description: Developed web applications using React and Node.js. Led a team of 5 engineers. Improved application performance by 30%.
-  - company: Startup Inc
-    title: Software Engineer
-    dates: 2018 - 2020
-    description: Built RESTful APIs with Python and Django. Worked on CI/CD pipelines.
+  - role: Senior Software Engineer
+    company: Tech Innovations Inc.
+    location: San Francisco, CA
+    start_date: "2020-06"
+    end_date: "2023-08"
+    description: |
+      • Led a team of 5 engineers in developing a microservices architecture for a cloud-based SaaS platform.
+      • Implemented CI/CD pipelines using GitHub Actions, reducing deployment time by 40%.
+      • Mentored junior developers and conducted code reviews to maintain code quality.
+  - role: Software Engineer
+    company: Web Solutions Ltd.
+    location: New York, NY
+    start_date: "2018-03"
+    end_date: "2020-05"
+    description: |
+      • Developed and maintained RESTful APIs using Node.js and Express.
+      • Optimized database queries, improving application performance by 25%.
+      • Collaborated with UX/UI designers to implement responsive front-end interfaces.
 education:
-  - degree: Bachelor's in Computer Science
+  - degree: Bachelor of Science in Computer Science
     institution: State University
-    dates: 2014 - 2018
-  - degree: High School Diploma
-    institution: Local High School
-    dates: 2010 - 2014
+    start_date: "2014-09"
+    end_date: "2018-05"
+  - degree: Associate Degree in Information Technology
+    institution: Community College
+    start_date: "2012-09"
+    end_date: "2014-05"
 skills:
-  - JavaScript
-  - Python
-  - React
-  - Node.js
-  - SQL
-  - Docker
+  languages:
+    - "JavaScript (ES6+, Node.js, Express)"
+    - "Python (Django, Flask, Pandas)"
+    - "Java (Spring Boot, Hibernate)"
+    - "C#"
+  web:
+    - "HTML5"
+    - "CSS3 (Flexbox, Grid)"
+    - "React"
+    - "Angular"
+    - "Vue.js"
+  databases:
+    - "PostgreSQL"
+    - "MongoDB"
+    - "MySQL"
+    - "Redis"
+  tools:
+    - "Git"
+    - "Docker"
+    - "Kubernetes"
+    - "Jenkins"
+    - "AWS (EC2, S3, RDS)"
+    - "Google Cloud Platform"
+    - "Terraform"
+    - "Jira"
+    - "Agile/Scrum"
 languages:
-  - English: Native
-  - Spanish: Intermediate
+  - language: English
+    proficiency: Native
+  - language: Spanish
+    proficiency: Intermediate
+certifications:
+  - "AWS Certified Solutions Architect - Associate (Amazon Web Services, 2022)"
+  - "Google Associate Android Developer (Google, 2021)"
+  - "Scrum Master Certification (Scrum Alliance, 2020)"
