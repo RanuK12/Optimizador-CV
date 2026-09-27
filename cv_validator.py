@@ -143,16 +143,14 @@ class CVValidator:
         Raises:
             CVValidationError: If validation fails with specific error message
         """
-        # Check personal information
-        CVValidator.validate_required_fields(config, 'personal', REQUIRED_FIELDS['personal'])
-        
+        # Check personal information (top-level fields, no nested 'personal' section)
+        for field in REQUIRED_FIELDS['personal']:
+            if field not in config:
+                raise CVValidationError(f"Missing required field '{field}' in personal section")
+
         # Validate email
         if not CVValidator.validate_email(config['email']):
             raise CVValidationError(f"Invalid email format: {config['email']}")
-        
-        # Check unknown fields in personal section
-        all_personal_fields = REQUIRED_FIELDS['personal'] + OPTIONAL_FIELDS['personal']
-        CVValidator.validate_unknown_fields(config, 'personal', all_personal_fields)
         
         # Validate experience if present
         if 'experience' in config:

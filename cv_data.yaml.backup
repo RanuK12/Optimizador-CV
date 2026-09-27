@@ -1,0 +1,164 @@
+full_name: Emilio Ranucoli
+first_name: Emilio
+last_name: Ranucoli
+birth_date: 1996-06-12
+nationality: Argentina / Italia
+languages:
+  - lang: English
+    level: Fluent
+  - lang: Spanish
+    level: Native
+  - lang: Italian
+    level: Native
+contact:
+  email_personal: ranucoliemilio@gmail.com
+  email_business: emilio@ranuk.dev
+  phone: +39 344 5721753
+  location_current: Zaandam, Países Bajos (o Barcelona, España)
+  address:
+    street: Via della Stazione 100
+    city: Strigno
+    postal_code: "38059"
+    country: Italia
+    full: Via della Stazione 100, 38059 Strigno, Italia
+  linkedin: https://linkedin.com/in/emilio-ranucoli
+  github: https://github.com/RanuK12
+  website: https://ranuk.dev
+professional:
+  headline: Machine Learning Engineer | Data Scientist | AI Engineer
+  summary: >-
+    Proactive Machine Learning Engineer and Data Scientist with strong analytical and programming skills,
+    specialized in building AI agents, deploying LLM workflows, and building production-grade Python backends.
+    Hands-on experience with PyTorch, TensorFlow, Scikit-learn, and FastAPI, deploying scalable machine learning
+    models and data pipelines across retail, government, and tech sectors.
+  company: Ranuk IT Solutions
+skills:
+  programming:
+    - Python (Pandas, NumPy, Scikit-learn, TensorFlow, Keras)
+    - SQL
+    - C#
+    - Java
+    - JavaScript
+  databases:
+    - PostgreSQL
+    - MongoDB
+    - MySQL
+    - SQL Server
+    - Data Modeling
+    - Data Warehouse
+  bi_analytics:
+    - Power BI (PL-300 Certified)
+    - Tableau
+    - Looker
+    - Excel
+    - DAX
+    - Statistical Analysis
+  data_engineering:
+    - ETL Pipelines
+    - RESTful APIs
+    - JSON
+    - Data Wrangling
+    - Data Analysis
+  cloud_devops:
+    - AWS (Certified)
+    - Azure
+    - GCP
+    - Kubernetes
+    - Git/GitHub
+    - CI/CD
+    - Docker
+  soft:
+    - Agile/Scrum
+    - Problem-Solving
+    - Analytical Thinking
+    - Communication
+    - Teamwork
+experience:
+  - role: Machine Learning Engineer (Contract)
+    company: Booking.com
+    location: Amsterdam, Netherlands
+    from: "2025-05"
+    to: "2025-10"
+    bullets:
+      - Led a dynamic pricing optimization system deploying ML models (Python, Scikit-learn, XGBoost, neural networks) for real-time price adjustments.
+      - Analyzed 5M+ historical booking records improving segmentation and campaign effectiveness.
+      - Integrated models into Booking.com's AWS production environment.
+      - Contributed to a 12% improvement in promotional targeting accuracy.
+  - role: Python Developer
+    company: Eurobrico S.p.A.
+    location: Villa Castel Ivano, Italy
+    from: "2024-11"
+    to: "2025-04"
+    bullets:
+      - Developed and maintained internal apps to optimize inventory management and retail operations.
+      - Implemented data integration and automation tools, reducing manual errors.
+      - Translated business needs into technology solutions with department heads.
+  - role: Data Science Analyst / Sr. Analyst - Supply Chain & Operations
+    company: Accenture
+    location: Argentina (Remote)
+    from: "2024-06"
+    to: "2024-11"
+    bullets:
+      - Built predictive and optimization models for supply chain (Python, SQL, Power BI).
+      - Applied ML to forecast demand and optimize inventory, achieving 15% cost reduction.
+      - Created interactive Tableau/Power BI dashboards.
+      - Worked in Scrum teams.
+  - role: Data Analyst & Power BI Specialist
+    company: Government of Cordoba
+    location: Cordoba, Argentina
+    from: "2023-11"
+    to: "2024-06"
+    bullets:
+      - Designed and maintained 15+ Power BI dashboards for public works KPIs.
+      - Cleaned and modeled 200K+ record datasets, improving report accuracy by 30%.
+      - Automated certification reporting, reducing manual effort by 40%.
+  - role: Data Annotation & Evaluation
+    company: Appen
+    location: Argentina (Remote)
+    from: "2023-01"
+    to: "2024-04"
+    bullets:
+      - Annotated and evaluated data for AI projects, improving NLP model accuracy.
+      - Collaborated with global teams on data collection and QC.
+  - role: Purchasing & Inventory Analyst
+    company: Farmasut
+    location: Cordoba, Argentina
+    from: "2015-11"
+    to: "2023-10"
+    bullets:
+      - Inventory audits and sales analysis with Tableau, reducing expiration losses by 15%.
+      - Optimized delivery routes, decreasing logistics costs.
+      - Built forecasting reports for purchasing.
+education:
+  - degree: Systems Engineer
+    institution: National Technological University (UTN)
+    country: Argentina
+    from: "2018-02"
+    to: "2024-02"
+    status: completed
+  - degree: Bachelor's in Business Administration
+    institution: National University of Cordoba (UNC)
+    country: Argentina
+    from: "2015-02"
+    to: present
+    status: in_progress
+certifications:
+  - Microsoft Power BI Data Analyst (PL-300) - Microsoft (2024)
+  - Machine Learning with Python - IBM (2025)
+  - Deep Learning Fundamentals - IBM (2025)
+  - Deep Learning with TensorFlow - IBM (2025)
+  - Python (Basic) Certificate - HackerRank (2026)
+  - Software Engineer Certificate - HackerRank (2026)
+  - AWS Cloud Practitioner - Amazon Web Services (2024)
+  - Google Data Analytics Professional Certificate - Google (2024)
+  - Intermediate Machine Learning - Kaggle (2024)
+projects:
+  - name: Crypto Analysis Dashboard
+    tools: Python, Streamlit, Plotly, Binance API, ML, Telegram Bot
+    desc: Cryptocurrency market analysis system with real-time data, algorithmic trading strategies, and modern web interface.
+  - name: ETL Big Data Pipeline
+    tools: Python, ETL, Backtesting, Risk Metrics, API Integration
+    desc: Automated ETL pipeline for financial data processing, backtesting trading strategies, and risk analysis.
+  - name: JobConnect - AI Job Finder
+    tools: Flask, AI/NLP, Web Scraping, Tailwind CSS
+    desc: Web platform using AI to match CVs with job opportunities across multiple platforms.
