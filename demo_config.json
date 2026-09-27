@@ -1,0 +1,47 @@
+{
+  "name": "Jane Smith",
+  "title": "Senior Data Scientist",
+  "email": "jane.smith@example.com",
+  "phone": "+1 (555) 987-6543",
+  "linkedin": "https://linkedin.com/in/janesmith",
+  "github": "https://github.com/janesmith",
+  "summary": "Data scientist with 6+ years of experience in machine learning, statistical analysis, and data visualization. Expert in translating complex data insights into actionable business strategies.",
+  "experience": [
+    {
+      "company": "Analytics Corp",
+      "title": "Senior Data Scientist",
+      "dates": "2018 - Present",
+      "description": "Developed predictive models increasing customer retention by 25%. Led team of 3 data scientists. Implemented A/B testing framework resulting in 15% improvement in conversion rates."
+    },
+    {
+      "company": "Data Solutions Ltd.",
+      "title": "Data Scientist",
+      "dates": "2016 - 2018",
+      "description": "Built recommendation systems for e-commerce platform. Created data pipelines processing 10M+ records daily. Collaborated with engineering team to deploy models to production."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Science in Data Science",
+      "institution": "University of Data Science",
+      "dates": "2014 - 2016"
+    },
+    {
+      "degree": "Bachelor of Science in Statistics",
+      "institution": "State University",
+      "dates": "2010 - 2014"
+    }
+  ],
+  "skills": [
+    "Python",
+    "R",
+    "SQL",
+    "Machine Learning",
+    "Statistical Analysis",
+    "Data Visualization",
+    "TensorFlow",
+    "PyTorch",
+    "Spark",
+    "AWS"
+  ]
+}
