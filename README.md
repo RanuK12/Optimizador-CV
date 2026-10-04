@@ -35,7 +35,22 @@ Para ejecutar el generador localmente, necesitas tener instalado Python 3 y las 
 Para regenerar tu CV con cualquier modificación que hagas en la información o el formato, simplemente ejecuta el script desde tu terminal:
 
 ```bash
-python build_cv.py
+python build_cv.py --input examples/sample.yaml --output mi_cv
+```
+
+Esto generará `mi_cv.docx` y `mi_cv.pdf` (si tiene las herramientas de conversión instaladas).
+
+### Ejemplo rápido
+
+```bash
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Generar CV desde archivo YAML
+python build_cv.py --input examples/sample.yaml --output mi_cv
+
+# Generar CV desde archivo JSON
+python build_cv.py --input examples/sample.json --output mi_cv
 ```
 
 ### Flujo del script:

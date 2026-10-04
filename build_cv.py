@@ -1,6 +1,6 @@
 """Generate ATS-optimized CV (DOCX + PDF) using configuration data."""
 import argparse
-import json
+
 import os
 import sys
 from typing import Dict, Any
@@ -11,7 +11,8 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-from cv_validator import validate_config_file
+from cv_validator import validate_config
+from optimizador_cv.input_loader import load_data
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -66,13 +67,19 @@ def heading(text):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate ATS-optimized CV (DOCX) from a JSON config file."
+        description="Generate ATS-optimized CV (DOCX) from a YAML/JSON config file."
     )
     parser.add_argument(
-        "config",
+        "--input",
+        "-i",
+        dest="config",
+        help="Path to YAML/JSON config file"
+    )
+    parser.add_argument(
+        "config_positional",
         nargs="?",
-        default="cv_config.json",
-        help="Path to JSON config file (default: cv_config.json)"
+        default=None,
+        help="Path to YAML/JSON config file (positional)"
     )
     parser.add_argument(
         "--output",
@@ -82,15 +89,18 @@ def main():
     )
     args = parser.parse_args()
 
+    # Support both --input and positional argument
+    config_path = args.config or args.config_positional or "cv_config.json"
+    
     # Validate configuration first
-    if not validate_config_file(args.config):
+    if not validate_config(config_path):
         sys.exit(1)
     
     print("✅ Configuration validation passed")
     
-    # Load configuration only after validation passes
-    from config_loader import load_config
-    config = load_config(args.config)
+    # Load configuration using the new input loader
+    # Cargar datos desde el archivo de configuración
+    config = load_data(config_path)
     
     # Determine output filename
     if args.output:

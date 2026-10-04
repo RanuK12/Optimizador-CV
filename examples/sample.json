@@ -1,0 +1,35 @@
+{
+  "name": "Emilio Ranucoli",
+  "email": "ranucoliemilio@gmail.com",
+  "phone": "+39 344 5721753",
+  "linkedin": "https://linkedin.com/in/emilio-ranucoli",
+  "github": "https://github.com/RanuK12",
+  "title": "Machine Learning Engineer",
+  "summary": "Experiencia en desarrollo de modelos de machine learning y automatización de procesos.",
+  "experience": [
+    {
+      "company": "Ranuk IT Solutions",
+      "title": "Machine Learning Engineer",
+      "dates": "2020 - Present",
+      "description": "Desarrollo de modelos de machine learning y automatización de procesos."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor's in Business Administration",
+      "institution": "National University of Córdoba",
+      "dates": "2015 - Present"
+    },
+    {
+      "degree": "Systems Engineer",
+      "institution": "National Technological University",
+      "dates": "2018 - 2024"
+    }
+  ],
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Data Science",
+    "Cloud Computing"
+  ]
+}
