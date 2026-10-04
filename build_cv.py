@@ -11,8 +11,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-from config_loader import load_config
-from cv_validator import CVValidator, CVValidationError
+from cv_validator import validate_config_file
 
 OUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -83,16 +82,15 @@ def main():
     )
     args = parser.parse_args()
 
-    # Load configuration
-    config = load_config(args.config)
-    
-    # Validate configuration
-    try:
-        CVValidator.validate(config)
-        print("✅ Configuration validation passed")
-    except CVValidationError as e:
-        print(f"❌ Configuration validation failed: {str(e)}")
+    # Validate configuration first
+    if not validate_config_file(args.config):
         sys.exit(1)
+    
+    print("✅ Configuration validation passed")
+    
+    # Load configuration only after validation passes
+    from config_loader import load_config
+    config = load_config(args.config)
     
     # Determine output filename
     if args.output:

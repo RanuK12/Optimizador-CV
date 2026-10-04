@@ -1,225 +1,144 @@
-"""Validator for CV configuration files."""
+#!/usr/bin/env python3
+"""
+Validador de configuración para el optimizador de CV.
+Valida que el archivo de configuración JSON/YAML tenga la estructura correcta
+para generar un CV válido.
+"""
 
-import re
 import json
+import sys
+import os
 from typing import Dict, Any, List
-from typing_extensions import TypedDict
 
-# Define required fields structure
-RequiredFields = TypedDict('RequiredFields', {
-    'personal': List[str],
-    'experience': List[str],
-    'education': List[str]
-})
-
-# Define required fields
-REQUIRED_FIELDS: RequiredFields = {
-    'personal': ['name', 'title', 'email', 'phone'],
-    'experience': ['company', 'title', 'dates'],
-    'education': ['degree', 'institution', 'dates']
-}
-
-# Define optional fields
-OPTIONAL_FIELDS = {
-    'personal': ['linkedin', 'github', 'summary'],
-    'experience': ['description'],
-    'education': []
-}
-
-# Valid email regex pattern
-EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-
-# Valid date patterns
-DATE_PATTERNS = [
-    r'^\d{4} - \d{4}$',  # YYYY - YYYY
-    r'^\d{4} - Presente$',  # YYYY - Presente
-    r'^\d{4} - actualidad$',  # YYYY - actualidad
-    r'^\d{4} - now$',  # YYYY - now
-    r'^\d{4} - Present$',  # YYYY - Present
-]
-
-
-class CVValidationError(Exception):
-    """Exception raised when CV configuration validation fails."""
-    pass
-
-
-class CVValidator:
-    """Validator for CV configuration files."""
+def validate_config(config: Dict[str, Any]) -> List[str]:
+    """
+    Valida la configuración del CV y retorna una lista de errores.
+    Si la lista está vacía, la configuración es válida.
+    """
+    errors = []
     
-    @staticmethod
-    def validate_email(email: str) -> bool:
-        """Validate email format."""
-        return re.match(EMAIL_REGEX, email) is not None
+    # Campos obligatorios en el nivel raíz
+    required_fields = ['name', 'title', 'email', 'phone']
+    for field in required_fields:
+        if field not in config:
+            errors.append(f"Missing required field '{field}'")
+        elif not isinstance(config[field], str) or not config[field].strip():
+            errors.append(f"Field '{field}' must be a non-empty string")
     
-    @staticmethod
-    def validate_date(date: str) -> bool:
-        """Validate date format."""
-        for pattern in DATE_PATTERNS:
-            if re.match(pattern, date):
-                return True
+    # Validar email (básico)
+    if 'email' in config and isinstance(config['email'], str):
+        if '@' not in config['email'] or '.' not in config['email'].split('@')[-1]:
+            errors.append("Field 'email' must be a valid email address")
+    
+    # Validar campos opcionales
+    if 'linkedin' in config and config['linkedin'] is not None:
+        if not isinstance(config['linkedin'], str) or not config['linkedin'].startswith('http'):
+            errors.append("Field 'linkedin' must be a valid URL or null")
+    
+    if 'github' in config and config['github'] is not None:
+        if not isinstance(config['github'], str) or not config['github'].startswith('http'):
+            errors.append("Field 'github' must be a valid URL or null")
+    
+    if 'summary' in config and config['summary'] is not None:
+        if not isinstance(config['summary'], str):
+            errors.append("Field 'summary' must be a string or null")
+    
+    # Validar experiencia
+    if 'experience' in config:
+        if not isinstance(config['experience'], list):
+            errors.append("Field 'experience' must be a list")
+        else:
+            for i, exp in enumerate(config['experience']):
+                if not isinstance(exp, dict):
+                    errors.append(f"Experience item {i} must be an object")
+                else:
+                    # Campos requeridos en experiencia
+                    exp_required = ['company', 'title', 'dates', 'description']
+                    for field in exp_required:
+                        if field not in exp:
+                            errors.append(f"Experience item {i} missing required field '{field}'")
+                        elif not isinstance(exp[field], str) or not exp[field].strip():
+                            errors.append(f"Experience item {i} field '{field}' must be a non-empty string")
+    
+    # Validar educación
+    if 'education' in config:
+        if not isinstance(config['education'], list):
+            errors.append("Field 'education' must be a list")
+        else:
+            for i, edu in enumerate(config['education']):
+                if not isinstance(edu, dict):
+                    errors.append(f"Education item {i} must be an object")
+                else:
+                    # Campos requeridos en educación
+                    edu_required = ['degree', 'institution', 'dates']
+                    for field in edu_required:
+                        if field not in edu:
+                            errors.append(f"Education item {i} missing required field '{field}'")
+                        elif not isinstance(edu[field], str) or not edu[field].strip():
+                            errors.append(f"Education item {i} field '{field}' must be a non-empty string")
+    
+    # Validar habilidades
+    if 'skills' in config:
+        if not isinstance(config['skills'], list):
+            errors.append("Field 'skills' must be a list")
+        else:
+            for i, skill in enumerate(config['skills']):
+                if not isinstance(skill, str) or not skill.strip():
+                    errors.append(f"Skills item {i} must be a non-empty string")
+    
+    return errors
+
+def validate_config_file(filepath: str) -> bool:
+    """
+    Valida un archivo de configuración JSON o YAML.
+    Retorna True si es válido, False en caso contrario.
+    """
+    if not os.path.exists(filepath):
+        print(f"❌ Configuration file not found: {filepath}")
         return False
     
-    @staticmethod
-    def validate_required_fields(config: Dict[str, Any], section: str, required: List[str]) -> None:
-        """Validate that all required fields exist in a section."""
-        for field in required:
-            if field not in config.get(section, {}):
-                raise CVValidationError(f"Missing required field '{field}' in {section} section")
-    
-    @staticmethod
-    def validate_unknown_fields(config: Dict[str, Any], section: str, valid_fields: List[str]) -> None:
-        """Validate that there are no unknown fields in a section."""
-        section_data = config.get(section, {})
-        for field in section_data:
-            if field not in valid_fields:
-                raise CVValidationError(f"Unknown field '{field}' found in {section} section")
-    
-    @staticmethod
-    def validate_experience(experience: List[Dict[str, Any]]) -> None:
-        """Validate experience section."""
-        if not isinstance(experience, list):
-            raise CVValidationError("Experience must be a list")
+    try:
+        if filepath.endswith('.json'):
+            with open(filepath, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+        elif filepath.endswith(('.yaml', '.yml')):
+            import yaml
+            with open(filepath, 'r', encoding='utf-8') as f:
+                config = yaml.safe_load(f)
+        else:
+            print(f"❌ Unsupported file format: {filepath}")
+            print("   Supported formats: .json, .yaml, .yml")
+            return False
         
-        for i, exp in enumerate(experience):
-            if not isinstance(exp, dict):
-                raise CVValidationError(f"Experience item {i} must be a dictionary")
+        if config is None:
+            print(f"❌ Configuration file is empty: {filepath}")
+            return False
             
-            # Check required fields
-            CVValidator.validate_required_fields(
-                {'experience': exp}, 
-                'experience', 
-                REQUIRED_FIELDS['experience']
-            )
-            
-            # Check date format
-            if not CVValidator.validate_date(exp['dates']):
-                raise CVValidationError(f"Invalid date format in experience item {i}: {exp['dates']}")
-    
-    @staticmethod
-    def validate_education(education: List[Dict[str, Any]]) -> None:
-        """Validate education section."""
-        if not isinstance(education, list):
-            raise CVValidationError("Education must be a list")
+        errors = validate_config(config)
         
-        for i, edu in enumerate(education):
-            if not isinstance(edu, dict):
-                raise CVValidationError(f"Education item {i} must be a dictionary")
-            
-            # Check required fields
-            CVValidator.validate_required_fields(
-                {'education': edu}, 
-                'education', 
-                REQUIRED_FIELDS['education']
-            )
-            
-            # Check date format
-            if not CVValidator.validate_date(edu['dates']):
-                raise CVValidationError(f"Invalid date format in education item {i}: {edu['dates']}")
-    
-    @staticmethod
-    def validate_skills(skills: List[str]) -> None:
-        """Validate skills section."""
-        if not isinstance(skills, list):
-            raise CVValidationError("Skills must be a list")
-        
-        for skill in skills:
-            if not isinstance(skill, str):
-                raise CVValidationError("All skills must be strings")
-            if not skill.strip():
-                raise CVValidationError("Empty skill found")
-    
-    @staticmethod
-    def validate(config: Dict[str, Any]) -> bool:
-        """
-        Validate CV configuration.
-        
-        Args:
-            config: Dictionary with configuration data
-            
-        Returns:
-            True if configuration is valid
-            
-        Raises:
-            CVValidationError: If validation fails with specific error message
-        """
-        # Check personal information
-        CVValidator.validate_required_fields(config, 'personal', REQUIRED_FIELDS['personal'])
-        
-        # Validate email
-        if not CVValidator.validate_email(config['email']):
-            raise CVValidationError(f"Invalid email format: {config['email']}")
-        
-        # Check unknown fields in personal section
-        all_personal_fields = REQUIRED_FIELDS['personal'] + OPTIONAL_FIELDS['personal']
-        CVValidator.validate_unknown_fields(config, 'personal', all_personal_fields)
-        
-        # Validate experience if present
-        if 'experience' in config:
-            CVValidator.validate_experience(config['experience'])
-        
-        # Validate education if present
-        if 'education' in config:
-            CVValidator.validate_education(config['education'])
-        
-        # Validate skills if present
-        if 'skills' in config:
-            CVValidator.validate_skills(config['skills'])
-        
-        # Validate summary if present
-        if 'summary' in config:
-            if not isinstance(config['summary'], str):
-                raise CVValidationError("Summary must be a string")
+        if errors:
+            print(f"❌ Configuration validation failed:")
+            for error in errors:
+                print(f"   • {error}")
+            return False
         
         return True
-
-
-def validate_config_file(config_path: str) -> bool:
-    """
-    Validate a CV configuration file.
-    
-    Args:
-        config_path: Path to the configuration file
         
-    Returns:
-        True if configuration is valid
-        
-    Raises:
-        FileNotFoundError: If the configuration file doesn't exist
-        CVValidationError: If validation fails
-        json.JSONDecodeError: If JSON parsing fails
-    """
-    if not config_path.endswith(('.json', '.yaml', '.yml')):
-        raise CVValidationError("Configuration file must be .json, .yaml or .yml")
-    
-    try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            if config_path.endswith('.json'):
-                config = json.load(f)
-            else:
-                # For YAML files, we need PyYAML but we'll handle it separately
-                # For now, just check if it's a dict
-                import yaml
-                config = yaml.safe_load(f)
-        
-        return CVValidator.validate(config)
-    
     except json.JSONDecodeError as e:
-        raise json.JSONDecodeError(f"Invalid JSON format: {e}", e.doc, e.pos)
+        print(f"❌ Invalid JSON in {filepath}: {e}")
+        return False
     except Exception as e:
-        raise CVValidationError(f"Error loading configuration: {str(e)}")
-
+        print(f"❌ Error reading {filepath}: {e}")
+        return False
 
 if __name__ == "__main__":
-    import argparse
+    if len(sys.argv) < 2:
+        print("Usage: python cv_validator.py <config_file.json|yaml>")
+        sys.exit(1)
     
-    parser = argparse.ArgumentParser(description="Validate CV configuration file")
-    parser.add_argument("config", help="Path to configuration file")
-    args = parser.parse_args()
-    
-    try:
-        if validate_config_file(args.config):
-            print(f"✅ Configuration file {args.config} is valid")
-    except Exception as e:
-        print(f"❌ Validation failed: {str(e)}")
-        exit(1)
+    config_file = sys.argv[1]
+    if validate_config_file(config_file):
+        print(f"✅ Configuration file '{config_file}' is valid")
+        sys.exit(0)
+    else:
+        sys.exit(1)
