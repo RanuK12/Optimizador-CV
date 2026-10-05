@@ -1,0 +1,20 @@
+{
+    "repo": "RanuK12/optimizador-cv",
+    "branch": "ranukita/075fa6",
+    "title": "feat: add YAML/JSON input support and PDF generation [ranukita:075fa6]",
+    "body": "This PR adds support for loading CV data from YAML/JSON files instead of hardcoded values, and adds PDF generation capability.\n\nChanges:\n- Added `optimizador_cv/input_loader.py` module to load data from .yaml, .yml, or .json files\n- Modified `build_cv.py` to use the new input loader and support PDF output\n- Added `examples/sample.yaml` as a complete example configuration\n- Added automatic PDF generation when output file ends with .pdf\n\nThe project is now ready for external users to use with their own data files.",
+    "files": [
+        "build_cv.py",
+        "optimizador_cv/input_loader.py",
+        "examples/sample.yaml"
+    ],
+    "commands": [
+        "python3 build_cv.py examples/sample.yaml --output /tmp/test_cv.pdf",
+        "python3 -m pytest tests/" 
+    ],
+    "tests_pass": true,
+    "dependencies": [
+        "PyYAML",
+        "docx2pdf"
+    ]
+}
