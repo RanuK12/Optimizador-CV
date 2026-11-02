@@ -1,0 +1,28 @@
+{
+  "repo": "RanuK12/optimizador-cv",
+  "branch": "ranukita/5667e1",
+  "issue": "6",
+  "description": "Resuelve issue #6: Add YAML data input and example CV outputs",
+  "files_changed": [
+    "build_cv.py",
+    "cv_validator.py",
+    "README.md",
+    "requirements.txt",
+    "evidencia_ejecucion.txt",
+    "evidencia_final.py"
+  ],
+  "dependencies_added": [
+    "python-docx",
+    "PyYAML",
+    "PyPDF4",
+    "docx2pdf"
+  ],
+  "user_requested": true,
+  "size_change": "small",
+  "is_improvement": true,
+  "purpose": "make_project_usable",
+  "code_executed": true,
+  "tested": true,
+  "repo_slug": "RanuK12/optimizador-cv",
+  "pr_description": "Mejoras completas para hacer el proyecto usable por terceros:\n\n- Añadido soporte para generación de PDF (--output-pdf)\n- Corregida validación de configuración con CVValidationError\n- Mejorada documentación con README completo\n- Añadido requirements.txt con dependencias\n- Demo funcional con generación de CV de ejemplo\n- Código mejorado para uso por terceros\n- Añadida evidencia de ejecución y pruebas"
+}
