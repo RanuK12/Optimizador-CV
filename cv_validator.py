@@ -131,6 +131,18 @@ def validate_config_file(filepath: str) -> bool:
         print(f"❌ Error reading {filepath}: {e}")
         return False
 
+class CVValidationError(Exception):
+    """Excepción para errores de validación de CV."""
+    pass
+
+def validate_config_or_raise(config: Dict[str, Any]) -> None:
+    """
+    Valida la configuración del CV y lanza CVValidationError si hay errores.
+    """
+    errors = validate_config(config)
+    if errors:
+        raise CVValidationError("\n".join(errors))
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python cv_validator.py <config_file.json|yaml>")

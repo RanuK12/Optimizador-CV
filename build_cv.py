@@ -10,6 +10,7 @@ from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
+from PyPDF4 import PdfFileWriter, PdfFileReader
 
 from cv_validator import validate_config_file
 
@@ -79,6 +80,11 @@ def main():
         "-o",
         default=None,
         help="Output filename (without extension). Default: uses name from config"
+    )
+    parser.add_argument(
+        "--output-pdf",
+        action="store_true",
+        help="Generate PDF output in addition to DOCX"
     )
     args = parser.parse_args()
 
@@ -155,6 +161,16 @@ def main():
     # Save document
     doc.save(DOCX_PATH)
     print(f"CV generated successfully: {DOCX_PATH}")
+    
+    # Generate PDF if requested
+    if args.output_pdf:
+        try:
+            from docx2pdf import convert
+            convert(DOCX_PATH, PDF_PATH)
+            print(f"PDF generated successfully: {PDF_PATH}")
+        except Exception as e:
+            print(f"⚠️  Warning: Could not generate PDF: {e}")
+            print("  Install docx2pdf: pip install docx2pdf")
 
 
 if __name__ == "__main__":
